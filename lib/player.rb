@@ -1,30 +1,30 @@
 class Player
     attr_accessor :name, :life_points
 
-    def initialize(name_to_save)
+    def initialize(name_to_save) #initialisation de la classe
         @name = name_to_save
         @life_points = 10
     end
 
-    def show_state
+    def show_state #méthode qui montre l'état du joueur
         puts "#{@name} a #{@life_points} points de vie"
     end
 
-    def gets_damage(damage)
+    def gets_damage(damage) #méthode pour infliger des dégats
         @life_points = @life_points - damage
         if @life_points <= 0
             return "Le joueur #{@name} a été tué !" 
         end
     end
 
-    def attacks(player)
+    def attacks(player) #méthode d'attaque des joueurs
         dam = compute_damage
         puts "Le joueur #{@name} attaque le joueur #{player.name}"
         player.gets_damage(dam)
         puts "Il lui inflige #{dam} points de dommages"
     end
 
-    def compute_damage
+    def compute_damage #génère un dégat aléatoire entre 1 et 6
         return rand(1..6)
     end
 end
@@ -46,7 +46,7 @@ class HumanPlayer < Player
         rand(1..6) * @weapon_level
     end
 
-    def search_weapon
+    def search_weapon #méthode qui permet au joueur d'obtenie une nouvelle arme 
         weapon = rand(1..6)
         puts "Tu as trouvé une arme de niveau #{weapon}."
         if weapon > @weapon_level
@@ -58,7 +58,7 @@ class HumanPlayer < Player
         end
     end
 
-    def search_health_pack
+    def search_health_pack #méthode qui permet au joueur de gagner des points de vie
         life = rand(1..6)
         if life == 1
             puts "Tu n'as rien trouvé... "
