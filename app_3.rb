@@ -13,3 +13,7 @@ def menu
     name = gets.chomp
     my_game = Game.new("#{name}")
 end
+
+menu
+
+binding.pry

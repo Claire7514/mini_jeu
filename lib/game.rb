@@ -1,11 +1,10 @@
 require_relative 'player'
 
-class game
+class Game
     attr_accessor :HumanPlayer, :enemies
 
     def initialize(name_to_save)
-        @human_player = name_to_save
-        hplayer = Player.new("Wolverine")
+        @human_player = HumanPlayer.new(name_to_save)
         @enemies = []
         player1 = Player.new("Josiane")
         player2 = Player.new("José")
@@ -87,8 +86,8 @@ class game
     end
 
     def end
-        fin = is_still_ongoing?
-        if fin = false
+        fin == is_still_ongoing?
+        if fin == false
             puts "La partie est finie"
             if hplayer.life_points == 0 
                 puts "Loser ! Tu as perdu !"

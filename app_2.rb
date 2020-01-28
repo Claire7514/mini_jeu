@@ -10,7 +10,7 @@ def menu
     puts "|Le but du jeu est d'être le dernier survivant !|"
     puts "------------------------------------------------"
 
-    puts "Rentre ton petit prénom :"
+    puts "Rentre ton petit nom :"
     name = gets.chomp
     hplayer = HumanPlayer.new("#{name}")
 
@@ -19,7 +19,7 @@ def menu
     enemy = []
     enemy << player1 << player2
 
-    while player1.life_points !=0 || player2.life_points !=0 && hplayer.life_points !=0
+    while hplayer.life_points > 0 && (player1.life_points > 0 || player2.life_points > 0)
         puts "------------------------------------------------"
         puts "Voici l'état de ton joueur :"
         hplayer.show_state
@@ -30,8 +30,13 @@ def menu
         puts ""
         puts "Attaquer un joueur en vue :"
         puts ""
-        puts "0 - Josiane a #{player1.life_points} points de vie"
-        puts "1 - José a #{player2.life_points} points de vie"
+        if player1.life_points > 0
+            puts "0 - Josiane a #{player1.life_points} points de vie"
+        end
+
+        if player2.life_points > 0
+            puts "1 - José a #{player2.life_points} points de vie"
+        end
         puts "> "
         input = gets.chomp
 
@@ -40,17 +45,22 @@ def menu
         elsif input == "s"
             hplayer.search_health_pack
         elsif input == "0"
-            hplayer.attacks(player1) 
+            hplayer.attacks(player1)
+            puts "#{hplayer.name} attacks #{player1.name}"
+		    if player1.life_points > 0
+			    player1.show_state
+		    else
+			    puts "#{player1.name} est mort"
+
+		end
         else input == "1"
             hplayer.attacks(player2)
-        end
-
-        puts "------------------------------------------------"
-
-        enemy.each do |player|
-            if player.life_points > 0
-              player.show_state
-            end
+            puts "#{hplayer.name} attacks #{player2.name}"
+		    if player2.life_points > 0
+			    player2.show_state
+		    else
+			    puts "#{player2.name} est mort"
+		end
         end
 
         puts "------------------------------------------------"
@@ -63,9 +73,9 @@ def menu
         end
     end
     puts "La partie est finie"
-    if hplayer.life_points == 0 
+    if hplayer.life_points <= 0 
         puts "Loser ! Tu as perdu !"
-    else
+    elsif player1.life_points <= 0 && player2.life_points <= 0
         puts "BRAVO ! TU AS GAGNE !"
     end
 end

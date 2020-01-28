@@ -14,20 +14,14 @@ class Player
         @life_points = @life_points - damage
         if @life_points <= 0
             return "Le joueur #{@name} a été tué !" 
-        else
-            return "Le joueur #{@name} a perdu #{damage} vie(s)..."
         end
     end
 
     def attacks(player)
         dam = compute_damage
-        if player.life_points != 0 && player.life_points > dam
-            puts "Le joueur #{@name} attaque le joueur #{player.name}"
-            player.gets_damage(dam)
-            puts "Il lui inflige #{dam} points de dommages"
-        else
-            puts "#{player.name} est mort."
-        end
+        puts "Le joueur #{@name} attaque le joueur #{player.name}"
+        player.gets_damage(dam)
+        puts "Il lui inflige #{dam} points de dommages"
     end
 
     def compute_damage
@@ -49,7 +43,7 @@ class HumanPlayer < Player
     end
 
     def compute_damage
-        return rand(1..6) * @weapon_level
+        rand(1..6) * @weapon_level
     end
 
     def search_weapon
@@ -68,7 +62,7 @@ class HumanPlayer < Player
         life = rand(1..6)
         if life == 1
             puts "Tu n'as rien trouvé... "
-        elsif life >= 2 || life <= 5
+        elsif life >= 2 && life <= 5
             puts "Bravo, tu as trouvé un pack de +50 points de vie !"
             @life_points = @life_points + 50
         else 
